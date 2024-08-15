@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- This is for using Thymeleaf -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Employee Management System</title>
+<!-- Compiled and minified CSS -->
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+  rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+  crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="container">
+	<h3 class="mt-5">Employee Manegement System</h3>
+	<hr>
+	<!-- The link which sends GET request to "/showNewEmployeeForm"  -->
+	<a th:href="@{/showNewEmployeeForm}"
+		class="btn btn-success btn-sm mb-4 p-2">Add new employee</a>
+
+		<table class="table table-bordered table-striped">
+			<thead class="table-dark">
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+			<!-- You can acccess model attributes which are added in a Controller(EmployeeController.java) with ${attributeName}.
+				 In this case, it is "${listEmployees}".
+			     To show all employees data in this table, you need to use "th:each" in the thymeleaf template and iterate the employee of listEmployees -->
+				<tr th:each="employee: ${listEmployees}">
+					<th th:text="${employee.firstName}"></th>
+					<th th:text="${employee.lastName}"></th>
+					<th th:text="${employee.email}"></th>
+					<th>
+						<!-- The link which sends GET request to "/showFormForUpdate/{id}" (id is employee.id) -->
+						<a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}"
+							class="btn btn-info btn-sm">Update</a>
+					    
+					    <span class="fw-light">|</span>
+					    
+						<!-- The link which sends GET request to "/delete/{id}" (id is employee.id)  -->
+						<a th:href="@{/delete/{id}(id=${employee.id})}"
+							class="btn btn-danger btn-sm">Delete</a>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
+</html>
